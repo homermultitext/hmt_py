@@ -16,3 +16,16 @@ class HmtArchive():
         all_blocks = CexBlock.from_url(current_url)
         logging.info("Download complete.")
         self.blocks = all_blocks
+
+    def data_models(self) -> List[CexBlock]:
+        """
+        xxx
+        """
+        return [ blk for blk in self.blocks if blk.label == "datamodels" ]
+
+    def image_collections(self) -> List[str]:
+        """
+        xxx
+        """
+        datalines = [ ln for dm in self.data_models() for ln in dm.data  if "imagemodel" in ln]
+        return [ln.split("|")[0] for ln in datalines]
